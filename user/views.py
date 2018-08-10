@@ -7,4 +7,11 @@ def homepage(request):
 
 
 def upload(request):
-    return render(request, 'upload.html')
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'upload.html')
+
+
+def upload2(request):
+    return render(request, 'upload2.html')
