@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^$', views.homepage),
     url(r'^upload$', views.upload),
     url(r'^upload_picture$', views.upload_picture),
+    url(r'^user_details/(?P<user_name>[0-9A-Za-z_\-]+)/$', views.user_details),
 ]

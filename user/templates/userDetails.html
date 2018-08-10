@@ -51,16 +51,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="wrap">
         <div class="left-content">
             <div class="logo">
-                <h1><a href="index.html"><img src="{% static 'images/logo.png ' %}" alt=""/></a></h1>
+                <h1><a href="index.html"><img src="{% static 'images/logo.png' %}" alt=""/></a></h1>
             </div>
             <div class="menu">
                 <ol id="filters">
-                    <li class="home"><a href="/user">Home</a></li>
-                    <li class="upload"><a href="upload">Upload</a></li>
+                    <li class="home"><a href="/user/">Home</a></li>
+                    <li class="upload"><a href="/user/upload">Upload</a></li>
                 </ol>
                 <div class="copy_right">
-                    <p>&copy 2018 Share# . All Rights Reserved</p>
-                    </p>
+                    <p>&copy 2018 Share#.</p>
                 </div>
             </div>
         </div>
@@ -86,27 +85,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div id="content">
                 <div id="main" role="main">
                     <ul id="tiles">
-                        <!--
-                          These are our grid items. Notice how each one has classes assigned that
-                          are used for filtering. The classes match the "data-filter" properties above.
-                          -->
                         {% for item in list %}
-                            <li>
-                                <a href="user_details/{{ item.person }}" title="Image Name">
-                                    <img src="/media/{{ item.url }}" alt="" class="album-single-image"/></a>
-                                <p><a href="details.html"><img src="{% static 'images/blog-icon1.png ' %}"
+                            <li data-filter-class='["photos", "blog"]'>
+                                <a href="/media/{{ item.url }}" class="swipebox" title="Image Name">
+                                    <img src="/media/{{ item.url }}" alt=""  class="album-single-image"/></a>
+                                <p><a href="javascript:;"><img src="{% static 'images/blog-icon1.png' %}"
                                                                title="posted date" alt=""/>
-                                    <img src="{% static 'images/blog-icon2.png ' %}" title="views" alt=""/>
-                                    <img src="{% static 'images/blog-icon3.png ' %}" title="comments" alt=""/>
-                                    <img src="{% static 'images/blog-icon5.png ' %}" title="link" alt=""/>
+                                    <img src="{% static 'images/blog-icon2.png' %}" title="views" alt=""/>
+                                    <img src="{% static 'images/blog-icon3.png' %}" title="comments" alt=""/>
+                                    <img src="{% static 'images/blog-icon5.png' %}" title="link" alt=""/>
                                     <span>{{ item.person }}</span>
                                     <div class="clear"></div>
                                 </a></p>
                             </li>
                         {% endfor %}
-                        <!-- End of grid blocks -->
                     </ul>
-
                 </div>
 
 
