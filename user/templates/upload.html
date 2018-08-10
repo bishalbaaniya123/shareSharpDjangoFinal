@@ -1,0 +1,104 @@
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Free Gallery Station Website Template | Home :: w3layouts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static 'css/grids.css' %}" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!------ Light Box ------>
+    <link rel="stylesheet" href="{% static 'css/swipebox.css' %}">
+    <script src="{% static 'js/ios-orientationchange-fix.js' %}"></script>
+    <script src="{% static 'js/jquery.swipebox.min.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $(".swipebox").swipebox();
+        });
+    </script>
+    <!------ Eng Light Box ------>
+    <!---- Contact form ----->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#contactLink").click(function () {
+                if ($("#contactForm").is(":hidden")) {
+                    $("#contactForm").slideDown("slow");
+                }
+                else {
+                    $("#contactForm").slideUp("slow");
+                }
+            });
+
+        });
+
+        function closeForm() {
+            $("#messageSent").show("slow");
+            setTimeout('$("#messageSent").hide();$("#contactForm").slideUp("slow")', 2000);
+        }
+    </script>
+    <!--- End Contactform ----->
+</head>
+<body>
+<div class="main">
+    <div class="wrap">
+        <div class="left-content">
+            <div class="logo">
+                <h1><a href="index.html"><img src="{% static 'images/logo.png ' %}" alt=""/></a></h1>
+            </div>
+            <div class="menu">
+                <ol id="filters">
+                    <li class="home"><a href="/user">Home</a></li>
+                    <li class="upload"><a href="upload">Upload</a></li>
+                </ol>
+                <div class="copy_right">
+                    <p>&copy 2013 Gallery Station . All Rights Reserved | Design by <a href="http://w3layouts.com">W3Layouts</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="contactFormContainer">
+            <div id="contactForm">
+                <fieldset>
+                    <label for="Name">Name *</label>
+                    <input id="name" type="text"/>
+                    <label for="Email">Email address *</label>
+                    <input id="Email" type="text"/>
+                    <label for="Message">Your message *</label>
+                    <textarea id="Message" rows="3" cols="20"></textarea>
+                    <input id="sendMail" type="submit" name="submit" onClick="closeForm()"/>
+                    <span id="messageSent">Your message has been sent successfully!</span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="header">
+                <div class="social-icons">
+                    <ul>
+                        <li><a class="facebook" href="#" target="_blank"> </a></li>
+                        <li><a class="twitter" href="#" target="_blank"></a></li>
+                        <li><a class="googleplus" href="#" target="_blank"></a></li>
+                        <li><a class="pinterest" href="#" target="_blank"></a></li>
+                        <li><a class="dribbble" href="#" target="_blank"></a></li>
+                        <li><a class="vimeo" href="#" target="_blank"></a></li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="content">
+
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>
