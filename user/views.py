@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+import random
 
 # Create your views here.
 from user.models import PictureAll
@@ -28,10 +29,12 @@ def upload(request):
 @csrf_exempt
 def upload_picture(request):
     print("this is the request in UPLOAD_PICTURE", request)
+    all_people = ['bishal', 'anuj', 'dip', 'shailesh']
     pic = request.FILES['file']
     p = PictureAll()
     p.file = pic
     p.url = "images/gallery/" + pic.name.replace(" ", "_")
+    p.person = random.choice(all_people)
     p.save()
     p.url = str(p.file)
     p.save()

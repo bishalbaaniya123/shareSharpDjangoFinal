@@ -86,15 +86,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div id="main" role="main">
                     <ul id="tiles">
                         {% for item in list %}
-                            <li data-filter-class='["photos", "blog"]'>
+                            <li data-filter-class='["photos", "blog"]' class="top-margin-li">
                                 <a href="/media/{{ item.url }}" class="swipebox" title="Image Name">
                                     <img src="/media/{{ item.url }}" alt=""  class="album-single-image"/></a>
-                                <p><a href="javascript:;"><img src="{% static 'images/blog-icon1.png' %}"
-                                                               title="posted date" alt=""/>
-                                    <img src="{% static 'images/blog-icon2.png' %}" title="views" alt=""/>
-                                    <img src="{% static 'images/blog-icon3.png' %}" title="comments" alt=""/>
-                                    <img src="{% static 'images/blog-icon5.png' %}" title="link" alt=""/>
-                                    <span>{{ item.person }}</span>
+                                <p><a href="javascript:;">
+                                    <span>{{ forloop.counter }}</span>
                                     <div class="clear"></div>
                                 </a></p>
                             </li>
