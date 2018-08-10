@@ -26,12 +26,12 @@
 <script type="text/javascript">
     Dropzone.options.myAwesomeDropzone = {
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 1000,
         url: 'UploadImages',
         previewsContainer: "#dropzone-previews",
         uploadMultiple: true,
         parallelUploads: 5,
-        maxFiles: 20,
+        maxFiles: 100,
         init: function () {
             var cd;
             this.on("success", function (file, response) {
