@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from classifier.neuralnet import classifier_image
@@ -25,10 +25,6 @@ def homepage(request):
 
 def upload(request):
     return render(request, 'upload.html')
-
-
-def receive(request):
-    return render(request, 'receive.html')
 
 
 @csrf_exempt
@@ -59,7 +55,28 @@ def user_details(request, user_name):
     return render(request, 'userDetails.html', {'list': all_images_list, 'username': user_name})
 
 
+def getListOfLans(request):
+    data = ["one", "two", "three"]
+    return JsonResponse(data, safe=False)
+
+
+GLOBAL_USERNAME = ""
+
+
+def receive(request):
+    return render(request, 'receive.html')
+
+
+def receive_photos(request):
+    global GLOBAL_USERNAME
+    return redirect('/user/receivedPictures/')
+
+
 def sendPic(request, lan, user_name):
+    global GLOBAL_USERNAME
+    print("current global usernam from sendpic", GLOBAL_USERNAME)
+    GLOBAL_USERNAME = user_name
+    print("current global usernam from sendpic after change", GLOBAL_USERNAME)
     print("these is lan: ", lan, " this is username: ", user_name)
     # to get all images of that person
     all_images = PictureAll.objects.all().filter(person=user_name)
@@ -68,6 +85,20 @@ def sendPic(request, lan, user_name):
     return JsonResponse(data, safe=False)
 
 
-def getListOfLans(request):
-    data = ["one", "two", "three"]
-    return JsonResponse(data, safe=False)
+def sendButtonPressed(request, userName):
+    global GLOBAL_USERNAME
+    print("current global usernam", GLOBAL_USERNAME)
+    GLOBAL_USERNAME = userName
+
+
+def getListOfImageUrls(request):
+    global GLOBAL_USERNAME
+    print("current global usernam", GLOBAL_USERNAME)
+    data = []
+    all_images = PictureAll.objects.all().filter(person=GLOBAL_USERNAME)
+    if len(all_images) is not 0:
+        for item in all_images:
+            data.append(item.url)
+        return JsonResponse(data, safe=False)
+    else:
+        return HttpResponse("No data found")

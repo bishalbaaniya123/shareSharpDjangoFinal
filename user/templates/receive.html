@@ -11,13 +11,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <title>Share#</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    {#    from upload#}
-    <link rel="stylesheet" href="{% static 'upload/basic.css' %}">
-    <link rel="stylesheet" href="{% static 'upload/bootstrap.min.css' %}">
-    {#    end from upload#}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
     <link rel="stylesheet" href="{% static 'css/grids.css' %}" type="text/css" media="all"/>
-    <!------ Light Box ------>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {#    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>#}
+
+    <link rel="stylesheet" href="{% static 'css/swipebox.css' %}">
+    <script src="{% static 'js/ios-orientationchange-fix.js' %}"></script>
+    <script src="{% static 'js/jquery.swipebox.min.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $(".swipebox").swipebox();
+        });
+    </script>
+    <!------ Eng Light Box ------>
+    <!---- Contact form ----->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#contactLink").click(function () {
+                if ($("#contactForm").is(":hidden")) {
+                    $("#contactForm").slideDown("slow");
+                }
+                else {
+                    $("#contactForm").slideUp("slow");
+                }
+            });
+
+        });
+
+        function closeForm() {
+            $("#messageSent").show("slow");
+            setTimeout('$("#messageSent").hide();$("#contactForm").slideUp("slow")', 2000);
+        }
+    </script>
+    <!--- End Contactform ----->
 </head>
 <body>
 <div class="main">
@@ -56,12 +86,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="clear"></div>
             </div>
             <div id="content">
-                <div class="upload-main">
-                    <form method="post" class="dropzone"
-                          id="image-upload">
-                        {% csrf_token %}
-                    </form>
-                </div>
+                <button type="button" class="btn btn-info btn-lg all-buttons receive-solo" onclick="receivePhotos()">
+                    Receive
+                </button>
             </div>
         </div>
         <div class="clear"></div>
@@ -70,6 +97,49 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </body>
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'upload/dropzone.js' %}"></script>
+<!-- Include the imagesLoaded plug-in -->
+<script src="{% static 'js/jquery.imagesloaded.js' %}"></script>
+<script src="{% static 'js/jquery.wookmark.js' %}"></script>
+<!-- Once the page is loaded, initalize the plug-in. -->
+<script type="text/javascript">
+    (function ($) {
+        $('#tiles').imagesLoaded(function () {
+            // Prepare layout options.
+            var options = {
+                autoResize: true, // This will auto-update the layout when the browser window is resized.
+                container: $('#main'), // Optional, used for some extra CSS styling
+                offset: 2, // Optional, the distance between grid items
+                itemWidth: 310 // Optional, the width of a grid item
+            };
+
+            // Get a reference to your grid items.
+            var handler = $('#tiles li'),
+                filters = $('#filters li');
+
+            // Call the layout function.
+            handler.wookmark(options);
+
+            /**
+             * When a filter is clicked, toggle it's active state and refresh.
+             */
+            var onClickFilter = function (event) {
+                var item = $(event.currentTarget),
+                    activeFilters = [];
+                item.toggleClass('active');
+
+                // Collect active filter strings
+                filters.filter('.active').each(function () {
+                    activeFilters.push($(this).data('filter'));
+                });
+
+                handler.wookmarkInstance.filter(activeFilters, 'or');
+            }
+
+            // Capture filter click events.
+            filters.click(onClickFilter);
+        });
+    })(jQuery);
+</script>
 
 <script type="text/javascript">
     var isFirstTry = true;
@@ -83,6 +153,96 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         retryChunks: true,
     };
 
+    {% comment %}function receivePhotos() {
+        console.log("this is receivePhotos");
+        $.ajax({
+            url: '/user/receivePhotos',
+            success: function (data) {
+                var finalHtml = "";
+                for (var i = 0; i < data.length; i++) {
+                    finalHtml += "<a href='javascript:;' onclick='sendPics(\"" + data[i] + "\")'>" + data[i] + "</a><br/>"
+                }
+                $("#main-modal-text").html(finalHtml);
+            },
+            error: function () {
+                console.log("Error while getting the list");
+            }
+        });
+    }{% endcomment %}
+
+    {% comment %}function receivePhotos() {
+        console.log("this is receivephotos");
+        $.ajax({
+            url: '/user/getListOfImageUrls',
+            success: function (data) {
+                console.log("this is data", data);
+                if (data === "No data found") {
+                    console.log("no data was found");
+                } else {
+                    var finalHtmlPic = '<div id="main" role="main">' +
+                        '<ul id="tiles">';
+                    for (var j = 0; j < data.length; j++) {
+                        finalHtmlPic += '<li data-filter-class=\'["photos", "blog"]\' class="top-margin-li">' +
+                            '<a href="/media/' + data[j] + '" class="swipebox" title="Image Name">' +
+                            '<img src="/media/' + data[j] + '" alt="" class="album-single-image"/></a>' +
+                            '<p><a href="javascript:;">' +
+                            '<span>' + j + '</span>' +
+                            '<div class="clear"></div>' +
+                            '</a></p>' +
+                            '</li>'
+                    }
+                    finalHtmlPic += '</ul>' +
+                        '</div>';
+                    console.log("fnal", finalHtmlPic);
+                    setTimeout(function () {
+                        $("#content").html(finalHtmlPic);
+                    }, 2000);
+                }
+            },
+            error: function () {
+                console.log("Error while getting the list");
+            }
+        });
+    }{% endcomment %}
+
+    function receivePhotos() {
+        $(".all-buttons").hide();
+        $("#content").html("<b class='wait-up'>Receiving, please wait......</b>");
+        console.log("this is receivephotos");
+        $.ajax({
+            url: 'http://127.0.0.1:8080/user/getListOfImageUrls',
+            success: function (data) {
+                console.log("this is data", data);
+                if (data === "No data found") {
+                    console.log("no data was found");
+                    receivePhotos();
+                } else {
+                    var finalHtmlPic = '';
+                    for (var j = 0; j < data.length; j++) {
+                        finalHtmlPic = '<img src="/media/' + data[j] + '" style="width: 300px; height:300px; padding:30px;"/>'
+                        $("#content").prepend(finalHtmlPic);
+                        sleep(1000);
+                    }
+                    $(".wait-up").hide();
+
+                    console.log("fnal", finalHtmlPic);
+
+                }
+            },
+            error: function () {
+                console.log("Error while getting the list");
+            }
+        });
+    }
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
 </script>
 
 </html>
