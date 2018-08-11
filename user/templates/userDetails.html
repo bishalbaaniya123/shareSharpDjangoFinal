@@ -1,0 +1,208 @@
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Share#</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static 'css/grids.css' %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {#    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>#}
+
+    <link rel="stylesheet" href="{% static 'css/swipebox.css' %}">
+    <script src="{% static 'js/ios-orientationchange-fix.js' %}"></script>
+    <script src="{% static 'js/jquery.swipebox.min.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $(".swipebox").swipebox();
+        });
+    </script>
+    <!------ Eng Light Box ------>
+    <!---- Contact form ----->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#contactLink").click(function () {
+                if ($("#contactForm").is(":hidden")) {
+                    $("#contactForm").slideDown("slow");
+                }
+                else {
+                    $("#contactForm").slideUp("slow");
+                }
+            });
+
+        });
+
+        function closeForm() {
+            $("#messageSent").show("slow");
+            setTimeout('$("#messageSent").hide();$("#contactForm").slideUp("slow")', 2000);
+        }
+    </script>
+    <!--- End Contactform ----->
+</head>
+<body>
+<div class="main">
+    <div class="wrap">
+        <div class="left-content">
+            <div class="logo">
+                <h1><a href="index.html"><img src="{% static 'images/logo.png' %}" alt=""/></a></h1>
+            </div>
+            <div class="menu">
+                <ol id="filters">
+                    <li class="home"><a href="/user/">Home</a></li>
+                    <li class="upload"><a href="/user/upload">Upload</a></li>
+                    <li class="receive"><a href="/user/receive">Receive</a></li>
+                </ol>
+                <div class="copy_right">
+                    <p>&copy 2018 Share#.</p>
+                </div>
+            </div>
+        </div>
+        <div id="contactFormContainer">
+            <div id="contactForm">
+                <fieldset>
+                    <label for="Name">Name *</label>
+                    <input id="name" type="text"/>
+                    <label for="Email">Email address *</label>
+                    <input id="Email" type="text"/>
+                    <label for="Message">Your message *</label>
+                    <textarea id="Message" rows="3" cols="20"></textarea>
+                    <input id="sendMail" type="submit" name="submit" onClick="closeForm()"/>
+                    <span id="messageSent">Your message has been sent successfully!</span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="header">
+                <div class="clear"></div>
+            </div>
+
+            <div id="content">
+                <div id="main" role="main">
+                    <ul id="tiles">
+                        {% for item in list %}
+                            <li data-filter-class='["photos", "blog"]' class="top-margin-li">
+                                <a href="/media/{{ item.url }}" class="swipebox" title="Image Name">
+                                    <img src="/media/{{ item.url }}" alt="" class="album-single-image"/></a>
+                                <p><a href="javascript:;">
+                                    <span>{{ forloop.counter }}</span>
+                                    <div class="clear"></div>
+                                </a></p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-info btn-lg all-buttons" data-toggle="modal"
+                        data-target="#myModal" onclick="getListOfLans()">Send
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">List of available LANs</h4>
+                            </div>
+                            <div class="modal-body" id="main-modal-text">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {#end modal#}
+
+
+                <!-- Include the imagesLoaded plug-in -->
+                <script src="{% static 'js/jquery.imagesloaded.js' %}"></script>
+                <script src="{% static 'js/jquery.wookmark.js' %}"></script>
+                <!-- Once the page is loaded, initalize the plug-in. -->
+                <script type="text/javascript">
+                    (function ($) {
+                        $('#tiles').imagesLoaded(function () {
+                            // Prepare layout options.
+                            var options = {
+                                autoResize: true, // This will auto-update the layout when the browser window is resized.
+                                container: $('#main'), // Optional, used for some extra CSS styling
+                                offset: 2, // Optional, the distance between grid items
+                                itemWidth: 310 // Optional, the width of a grid item
+                            };
+
+                            // Get a reference to your grid items.
+                            var handler = $('#tiles li'),
+                                filters = $('#filters li');
+
+                            // Call the layout function.
+                            handler.wookmark(options);
+
+                            /**
+                             * When a filter is clicked, toggle it's active state and refresh.
+                             */
+                            var onClickFilter = function (event) {
+                                var item = $(event.currentTarget),
+                                    activeFilters = [];
+                                item.toggleClass('active');
+
+                                // Collect active filter strings
+                                filters.filter('.active').each(function () {
+                                    activeFilters.push($(this).data('filter'));
+                                });
+
+                                handler.wookmarkInstance.filter(activeFilters, 'or');
+                            }
+
+                            // Capture filter click events.
+                            filters.click(onClickFilter);
+                        });
+                    })(jQuery);
+                </script>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    function getListOfLans() {
+        $.ajax({
+            url: '/user/getListOfLans',
+            success: function (data) {
+                var finalHtml = "";
+                for (var i = 0; i < data.length; i++) {
+                    finalHtml += "<a href='javascript:;' onclick='sendPics(\""+ data[i] +"\")'>" + data[i] + "</a><br/>"
+                }
+                $("#main-modal-text").html(finalHtml);
+            },
+            error: function () {
+                console.log("Error while getting the list");
+            }
+        });
+    }
+    function sendPics(lan) {
+        $.ajax({
+            url: '/user/sendPic/' + lan + "/{{ username }}",
+            success: function (data) {
+                console.log("final data", data)
+            },
+            error: function () {
+                console.log("Error while getting the list");
+            }
+        });
+    }
+
+</script>
+</html>

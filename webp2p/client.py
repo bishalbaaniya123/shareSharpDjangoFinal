@@ -3,7 +3,7 @@ import socket
 
 class client:
 
-    PORT = 9876
+    PORT = 6000
     BUFSIZE = 4096
 
     def sendFile(self,hostip,fileurl):
@@ -25,5 +25,5 @@ class client:
 
 
 c=client()
-c.sendFile('192.168.1.4','client-image/DSC_1437.jpg')
+c.sendFile('192.168.43.7','client-image/image3.jpg')
 

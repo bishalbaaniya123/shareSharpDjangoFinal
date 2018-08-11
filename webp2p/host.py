@@ -6,7 +6,7 @@ class Host:
 
     def getAllHost(self):
         nm=nmap.PortScanner()
-        nm.scan(hosts='192.168.1.0/24',arguments='-sn')
+        nm.scan(hosts='192.168.43.0/24',arguments='-sn')
         i=0
 
         hosts={}
@@ -20,5 +20,5 @@ class Host:
                 i += 1
         except socket.herror:
             pass
-
+        print(hosts)
         return hosts

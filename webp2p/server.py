@@ -4,7 +4,7 @@ from host import Host
 
 class server:
 
-    PORT = 9876
+    PORT = 6000
     BUFSIZE = 4096
     PC_name=socket.gethostname()
 
@@ -18,10 +18,12 @@ class server:
             serv.bind(ADDR)
             serv.listen(5)
             print ('listening')
+
             while True:
                 conn,addr=serv.accept()
                 print ('client connected...', addr)
-                myfile=open('server-image/testfile.jpg','wb')
+
+                myfile=open('server-image/test.jpg','wb')
 
                 while True:
                     data=conn.recv(self.BUFSIZE)

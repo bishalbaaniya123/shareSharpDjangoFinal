@@ -1,0 +1,88 @@
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Share#</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {#    from upload#}
+    <link rel="stylesheet" href="{% static 'upload/basic.css' %}">
+    <link rel="stylesheet" href="{% static 'upload/bootstrap.min.css' %}">
+    {#    end from upload#}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static 'css/grids.css' %}" type="text/css" media="all"/>
+    <!------ Light Box ------>
+</head>
+<body>
+<div class="main">
+    <div class="wrap">
+        <div class="left-content">
+            <div class="logo">
+                <h1><a href="index.html"><img src="{% static 'images/logo.png ' %}" alt=""/></a></h1>
+            </div>
+            <div class="menu">
+                <ol id="filters">
+                    <li class="home"><a href="/user">Home</a></li>
+                    <li class="upload"><a href="upload">Upload</a></li>
+                    <li class="receive"><a href="receive">Receive</a></li>
+                </ol>
+                <div class="copy_right">
+                    <p>&copy 2018 Share# . All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+        <div id="contactFormContainer">
+            <div id="contactForm">
+                <fieldset>
+                    <label for="Name">Name *</label>
+                    <input id="name" type="text"/>
+                    <label for="Email">Email address *</label>
+                    <input id="Email" type="text"/>
+                    <label for="Message">Your message *</label>
+                    <textarea id="Message" rows="3" cols="20"></textarea>
+                    <input id="sendMail" type="submit" name="submit" onClick="closeForm()"/>
+                    <span id="messageSent">Your message has been sent successfully!</span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="header">
+                <div class="clear"></div>
+            </div>
+            <div id="content">
+                <div class="upload-main">
+                    <form method="post" class="dropzone"
+                          id="image-upload">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'upload/dropzone.js' %}"></script>
+
+<script type="text/javascript">
+    var isFirstTry = true;
+
+    Dropzone.options.imageUpload = {
+        url: "upload_picture",
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 100, // MB
+        timeout: 3000, /*milliseconds*/
+        acceptedFiles: '.png, .jpg, .jpeg, .tiff, .gif, .raw',
+        retryChunks: true,
+    };
+
+</script>
+
+</html>
