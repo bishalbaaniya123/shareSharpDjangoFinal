@@ -1,5 +1,5 @@
 import socket
-from host import Host
+from webp2p.host import Host
 
 
 class server:
@@ -40,8 +40,6 @@ class server:
                 conn.close()
                 print ('client disconnected')
 
-s=server()
-s.receive()
 
 # Procedure to use server as api
 

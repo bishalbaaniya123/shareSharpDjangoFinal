@@ -26,8 +26,6 @@ class client:
 
 
 
-c=client()
-c.sendFile('192.168.43.7','client-image/image3.jpg')
 
 # Procedure to use client api
 # from webp2p.client import client

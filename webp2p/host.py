@@ -25,7 +25,11 @@ class Host:
 
 
 
-## See your ip of computer and replate line 9 with it,  type ifconfig in linux terminal for ip address or ipconfig in windows terminal
-## from webp2p.host import Host
-## h=Host()
-## h.getAllHost()  , it gives list of all available ip in the newtork
+# See your ip of computer and replate line 9 with it,
+#  type ifconfig in linux terminal for ip address or ipconfig in windows terminal
+
+# from webp2p.host import Host
+
+# h=Host()
+# h.getAllHost()  , it gives list of all available ip in the newtork
+
