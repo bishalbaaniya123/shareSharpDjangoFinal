@@ -1,0 +1,1 @@
+./pre_img/Shailesh/aa.png 400 318 865 913
