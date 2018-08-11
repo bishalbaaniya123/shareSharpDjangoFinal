@@ -449,6 +449,10 @@ body {
     background-image: url(../images/upload.png);
 }
 
+#filters li.receive {
+    background-image: url(../images/receive.png);
+}
+
 #filters li.photo {
     background-image: url(../images/p-icon.png);
 }
